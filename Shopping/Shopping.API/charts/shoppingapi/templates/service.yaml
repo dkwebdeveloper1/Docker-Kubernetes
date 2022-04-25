@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "shoppingapi.fullname" . }}
+  labels:
+    app: {{ template "shoppingapi.name" . }}
+    chart: {{ template "shoppingapi.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "shoppingapi.name" . }}
+    release: {{ .Release.Name }}
